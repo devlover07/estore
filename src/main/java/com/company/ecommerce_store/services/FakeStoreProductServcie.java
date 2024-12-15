@@ -14,6 +14,7 @@ import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
 
 import com.company.ecommerce_store.dtos.FakeStoreProductDto;
+import com.company.ecommerce_store.exceptions.ProductNotExistException;
 import com.company.ecommerce_store.models.Category;
 import com.company.ecommerce_store.models.Product;
 
@@ -30,6 +31,7 @@ public class FakeStoreProductServcie implements ProductService {
 
 	private Product convertFakeStoreDtoToProduct(FakeStoreProductDto fakeStoreProductDto) {
 		Product product = new Product();
+		product.setId(fakeStoreProductDto.getId());
 		product.setTitle(fakeStoreProductDto.getTitle());
 		product.setDescription(fakeStoreProductDto.getDescription());
 		product.setCategory(new Category());
@@ -40,9 +42,15 @@ public class FakeStoreProductServcie implements ProductService {
 	}
 
 	@Override
-	public Product getSingleProduct(Long id) {
+	public Product getSingleProduct(Long id) throws ArithmeticException, ProductNotExistException {
+//		 int a = 1 / 0;
 //		RestTemplate restTemplate = new RestTemplate();
 		FakeStoreProductDto fakeStoreProductDto = restTemplate.getForObject("https://fakestoreapi.com/products/"+id, FakeStoreProductDto.class);
+		
+		if(fakeStoreProductDto == null) {
+			throw new ProductNotExistException("Product with "+id+" does not exist");
+		}
+		
 		return convertFakeStoreDtoToProduct(fakeStoreProductDto);
 	}
 
@@ -72,6 +80,7 @@ public class FakeStoreProductServcie implements ProductService {
 	public Product addNewProduct(Product product) {
 		
 		FakeStoreProductDto fakeStoreProductDto = new FakeStoreProductDto();
+		fakeStoreProductDto.setId(product.getId());
 		fakeStoreProductDto.setCategory(product.getCategory().getCategory());
 		fakeStoreProductDto.setDescription(product.getDescription());
 		fakeStoreProductDto.setImageUrl(product.getImageUrl());
