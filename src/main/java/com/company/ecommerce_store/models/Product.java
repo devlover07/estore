@@ -4,6 +4,7 @@ import org.hibernate.annotations.ManyToAny;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import lombok.Setter;
 public class Product extends BaseModel {
 	private String title;
 	private Double price;
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Category category;
 	private String description;
 	private String imageUrl;
