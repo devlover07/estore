@@ -69,9 +69,31 @@ public class SelfProductService implements ProductService {
 	}
 
 	@Override
-	public Product updateProduct(Long id, Product pruduct) {
-		// TODO Auto-generated method stub
-		return null;
+	public Product updateProduct(Long id, Product product) {
+		Optional<Product> optionalProduct = productRepository.findById(id);
+		
+		if(optionalProduct.isEmpty()) {
+			throw new RuntimeException("Product with id: "+id+"doesn't exist!");
+		}
+		Product savedProduct = optionalProduct.get();
+		
+		if(product.getTitle() != null) {
+			savedProduct.setTitle(product.getTitle());
+		}
+		
+		if(product.getDescription() != null) {
+			savedProduct.setDescription(product.getDescription());
+		}
+		
+		if(product.getPrice() != null) {
+			savedProduct.setPrice(product.getPrice());
+		}
+		
+		if(product.getImageUrl() != null) {
+			savedProduct.setImageUrl(product.getImageUrl());
+		}
+		
+		return productRepository.save(savedProduct);
 	}
 
 	@Override
