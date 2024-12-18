@@ -3,6 +3,7 @@ package com.company.ecommerce_store.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.company.ecommerce_store.exceptions.ProductNotExistException;
 import com.company.ecommerce_store.models.Product;
 import com.company.ecommerce_store.services.ProductService;
+import com.company.ecommerce_store.services.SelfProductService;
 
 @RestController
 @RequestMapping("/products")
@@ -26,7 +28,7 @@ public class ProductController {
 	private ProductService productService;
 	
 	@Autowired
-	public ProductController(ProductService productService) {
+	public ProductController(@Qualifier("selfProductService") ProductService productService) {
 		this.productService = productService;
 	}
 	

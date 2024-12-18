@@ -18,7 +18,7 @@ import com.company.ecommerce_store.exceptions.ProductNotExistException;
 import com.company.ecommerce_store.models.Category;
 import com.company.ecommerce_store.models.Product;
 
-@Service
+@Service("fakeStoreProductService")
 public class FakeStoreProductServcie implements ProductService {
 
 //	private Class FakeStoreProductDto;
@@ -31,11 +31,11 @@ public class FakeStoreProductServcie implements ProductService {
 
 	private Product convertFakeStoreDtoToProduct(FakeStoreProductDto fakeStoreProductDto) {
 		Product product = new Product();
-		product.setId(fakeStoreProductDto.getId());
+//		product.setId(fakeStoreProductDto.getId());
 		product.setTitle(fakeStoreProductDto.getTitle());
 		product.setDescription(fakeStoreProductDto.getDescription());
 		product.setCategory(new Category());
-		product.getCategory().setCategory(fakeStoreProductDto.getCategory());
+		product.getCategory().setName(fakeStoreProductDto.getCategory());
 		product.setImageUrl(fakeStoreProductDto.getImageUrl());
 		product.setPrice(fakeStoreProductDto.getPrice());
 		return product;
@@ -80,8 +80,8 @@ public class FakeStoreProductServcie implements ProductService {
 	public Product addNewProduct(Product product) {
 		
 		FakeStoreProductDto fakeStoreProductDto = new FakeStoreProductDto();
-		fakeStoreProductDto.setId(product.getId());
-		fakeStoreProductDto.setCategory(product.getCategory().getCategory());
+//		fakeStoreProductDto.setId(product.getId());
+		fakeStoreProductDto.setCategory(product.getCategory().getName());
 		fakeStoreProductDto.setDescription(product.getDescription());
 		fakeStoreProductDto.setImageUrl(product.getImageUrl());
 		fakeStoreProductDto.setPrice(product.getPrice());

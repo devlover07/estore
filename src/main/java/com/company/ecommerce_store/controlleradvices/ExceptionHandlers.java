@@ -31,6 +31,6 @@ public class ExceptionHandlers {
 		productNotExistDto.setTitle("Exception");
 		productNotExistDto.setMessage(exception.getMessage());
 //		return productNotExistDto;
-		return new ResponseEntity<ProductNotExistDto>(productNotExistDto, HttpStatus.OK);
+		return new ResponseEntity<ProductNotExistDto>(productNotExistDto, HttpStatus.NOT_FOUND);
 	}
 }
